@@ -33,13 +33,16 @@ public class IA_Detection : MonoBehaviour
         if (dot < threshold)
             return false;
 
-        if (Physics.Raycast(transform.position + Vector3.up, directionToTarget.normalized, out RaycastHit hit, distance))
+        Vector3 rayOrigin = transform.position + Vector3.up;
+        Vector3 rayDirection = (playerTarget.position - rayOrigin).normalized;
+        float rayDistance = Vector3.Distance(rayOrigin, playerTarget.position);
+
+        if (Physics.Raycast(rayOrigin, rayDirection, out RaycastHit hit, rayDistance))
         {
-            if (hit.transform == playerTarget)
-                return true;
+            return hit.transform == playerTarget;
         }
 
-        return false;
+        return true;
     }
 
     public Transform GetTarget()
