@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour
     public int Health { get; set; } = 100;
     public int LoopCount { get; private set; } = 0;
 
+    /// <summary>Permet à SaveSystem de restaurer le compteur de boucles.</summary>
+    public void SetLoopCount(int value) => LoopCount = value;
+
     /// <summary>
     /// Sauvegarde la position du joueur sur le plateau avant de charger le mini-jeu.
     /// </summary>
@@ -82,6 +85,14 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        // Charge la sauvegarde dès le démarrage si elle existe
+        SaveSystem.Load();
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveSystem.Save();
     }
 
     /// <summary>
@@ -169,10 +180,15 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Incremente le compteur de boucles completes.
+    /// Incrémente le compteur de boucles, sauvegarde et notifie le HUD.
     /// </summary>
     public void IncrementLoop()
     {
         LoopCount++;
+        SaveSystem.Save();
+
+        SaveHUD hud = FindFirstObjectByType<SaveHUD>();
+        if (hud != null)
+            hud.ShowNotification();
     }
 }

@@ -39,8 +39,14 @@ public class IA_Detection : MonoBehaviour
 
         if (Physics.Raycast(rayOrigin, rayDirection, out RaycastHit hit, rayDistance))
         {
-            return hit.transform == playerTarget;
+            if (hit.transform != playerTarget)
+                return false;
         }
+
+        // Joueur cache dans une caisse : invisible pour l'IA
+        MiniGamePlayer player = playerTarget.GetComponent<MiniGamePlayer>();
+        if (player != null && player.isHiding)
+            return false;
 
         return true;
     }
