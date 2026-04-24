@@ -180,6 +180,21 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Sauvegarde la position du joueur puis charge la scène Pierre Feuille Ciseaux.
+    /// </summary>
+    public void LoadRPSMiniGame()
+    {
+        PlayerController player = FindFirstObjectByType<PlayerController>();
+        if (player != null)
+            LastTileIndex = player.currentTileIndex;
+
+        if (SceneTransition.Instance != null)
+            SceneTransition.Instance.TransitionTo("RPSScene");
+        else
+            SceneManager.LoadScene("RPSScene");
+    }
+
+    /// <summary>
     /// Incrémente le compteur de boucles, sauvegarde et notifie le HUD.
     /// </summary>
     public void IncrementLoop()

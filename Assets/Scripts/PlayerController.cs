@@ -16,6 +16,9 @@ public class PlayerController : MonoBehaviour
     [Header("Feedback — MiniGame Panel")]
     public GameObject miniGamePanel;
 
+    [Header("Feedback — RPS Panel")]
+    public GameObject rpsPanel;
+
     [Header("Ecran de fin")]
     public GameObject endingPanel;
     public Text endingTitle;
@@ -71,6 +74,8 @@ public class PlayerController : MonoBehaviour
             dialoguePanel.SetActive(false);
         if (miniGamePanel != null)
             miniGamePanel.SetActive(false);
+        if (rpsPanel != null)
+            rpsPanel.SetActive(false);
         if (endingPanel != null)
             endingPanel.SetActive(false);
     }
@@ -156,6 +161,9 @@ public class PlayerController : MonoBehaviour
                 break;
             case "minigame":
                 OnMiniGame();
+                break;
+            case "minigame_rps":
+                OnMiniGameRPS();
                 break;
             case "heal":
                 OnHeal();
@@ -489,6 +497,41 @@ public class PlayerController : MonoBehaviour
                 + "\nArtefacts trouves : " + gm.artifactsCollected + "/3"
                 + "\nIndices trouves : " + gm.cluesCollected + "/3";
         }
+    }
+
+    // ============================================================
+    // MINIGAME RPS — Pierre Feuille Ciseaux
+    // ============================================================
+
+    private void OnMiniGameRPS()
+    {
+        if (rpsPanel == null) return;
+
+        rpsPanel.SetActive(true);
+
+        DiceRoller diceRoller = FindFirstObjectByType<DiceRoller>();
+        if (diceRoller != null)
+            diceRoller.SetInteractable(false);
+    }
+
+    /// <summary>Appelé par le bouton Jouer du RPSPanel.</summary>
+    public void EnterRPS()
+    {
+        if (rpsPanel != null)
+            rpsPanel.SetActive(false);
+
+        GameManager.Instance.LoadRPSMiniGame();
+    }
+
+    /// <summary>Appelé par le bouton Annuler du RPSPanel.</summary>
+    public void CancelRPS()
+    {
+        if (rpsPanel != null)
+            rpsPanel.SetActive(false);
+
+        DiceRoller diceRoller = FindFirstObjectByType<DiceRoller>();
+        if (diceRoller != null)
+            diceRoller.SetInteractable(true);
     }
 
     // ============================================================

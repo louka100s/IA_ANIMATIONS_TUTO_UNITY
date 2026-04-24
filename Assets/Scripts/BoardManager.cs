@@ -33,6 +33,9 @@ public class BoardManager : MonoBehaviour
     /// <summary>Prefab de particules pour les cases "minigame".</summary>
     public GameObject minigameParticles;
 
+    /// <summary>Prefab de particules pour les cases "minigame_rps".</summary>
+    public GameObject minigameRpsParticles;
+
     private void Awake()
     {
         GenerateBoard();
@@ -89,8 +92,8 @@ public class BoardManager : MonoBehaviour
             "dialogue", // 11
             "artifact", // 12 - Artefact 1
             "danger",   // 13
-            "heal",     // 14
-            "minigame", // 15 - Mini-jeu 3
+            "heal",        // 14
+            "minigame_rps",// 15 - Pierre Feuille Ciseaux
             "artifact", // 16 - Artefact 2
             "dialogue", // 17
             "danger",   // 18
@@ -122,13 +125,14 @@ public class BoardManager : MonoBehaviour
     {
         GameObject prefab = tileType switch
         {
-            "gold"     => goldParticles,
-            "heal"     => healParticles,
-            "danger"   => dangerParticles,
-            "artifact" => artifactParticles,
-            "clue"     => clueParticles,
-            "minigame" => minigameParticles,
-            _          => null
+            "gold"         => goldParticles,
+            "heal"         => healParticles,
+            "danger"       => dangerParticles,
+            "artifact"     => artifactParticles,
+            "clue"         => clueParticles,
+            "minigame"     => minigameParticles,
+            "minigame_rps" => minigameRpsParticles,
+            _              => null
         };
 
         if (prefab == null) return;
@@ -147,7 +151,8 @@ public class BoardManager : MonoBehaviour
             case "artifact": return new Color(0.80f, 0.53f, 0.20f); // orange dore #CC8833
             case "danger":   return new Color(0.53f, 0.20f, 0.67f); // violet #8833AA
             case "heal":     return new Color(0.20f, 0.67f, 0.33f); // vert clair #33AA55
-            case "minigame": return new Color(0.80f, 0.20f, 0.20f); // rouge #CC3333
+            case "minigame":     return new Color(0.80f, 0.20f, 0.20f); // rouge   #CC3333
+            case "minigame_rps": return new Color(0.80f, 0.40f, 0.20f); // orange  #CC6633
             default:         return new Color(0.80f, 0.80f, 0.80f);
         }
     }
