@@ -12,6 +12,7 @@ public class SaveData
     public bool[] artifactFound;
     public int cluesCollected;
     public bool[] clueFound;
+    public int rerollsAvailable;
 }
 
 /// <summary>
@@ -31,14 +32,15 @@ public static class SaveSystem
 
         SaveData data = new SaveData
         {
-            gold              = gm.Gold,
-            health            = gm.Health,
-            loopCount         = gm.LoopCount,
-            lastTileIndex     = gm.LastTileIndex,
+            gold               = gm.Gold,
+            health             = gm.Health,
+            loopCount          = gm.LoopCount,
+            lastTileIndex      = gm.LastTileIndex,
             artifactsCollected = gm.artifactsCollected,
-            artifactFound     = gm.artifactFound,
-            cluesCollected    = gm.cluesCollected,
-            clueFound         = gm.clueFound
+            artifactFound      = gm.artifactFound,
+            cluesCollected     = gm.cluesCollected,
+            clueFound          = gm.clueFound,
+            rerollsAvailable   = gm.rerollsAvailable
         };
 
         File.WriteAllText(SavePath, JsonUtility.ToJson(data, true));
@@ -55,14 +57,15 @@ public static class SaveSystem
 
         SaveData data = JsonUtility.FromJson<SaveData>(File.ReadAllText(SavePath));
 
-        gm.Gold              = data.gold;
-        gm.Health            = data.health;
+        gm.Gold               = data.gold;
+        gm.Health             = data.health;
         gm.SetLoopCount(data.loopCount);
-        gm.LastTileIndex     = data.lastTileIndex;
+        gm.LastTileIndex      = data.lastTileIndex;
         gm.artifactsCollected = data.artifactsCollected;
-        gm.artifactFound     = data.artifactFound ?? gm.artifactFound;
-        gm.cluesCollected    = data.cluesCollected;
-        gm.clueFound         = data.clueFound ?? gm.clueFound;
+        gm.artifactFound      = data.artifactFound ?? gm.artifactFound;
+        gm.cluesCollected     = data.cluesCollected;
+        gm.clueFound          = data.clueFound ?? gm.clueFound;
+        gm.rerollsAvailable   = data.rerollsAvailable;
 
         Debug.Log("SaveSystem : chargé depuis " + SavePath);
     }

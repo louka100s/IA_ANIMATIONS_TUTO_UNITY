@@ -78,26 +78,26 @@ public class BoardManager : MonoBehaviour
         // 20 types : start, dialogue, clue, artifact, danger, heal, minigame, normal
         string[] types = new string[]
         {
-            "start",    // 0
-            "minigame", // 1  - Mini-jeu 1
-            "dialogue", // 2
-            "clue",     // 3  - Indice 0
-            "artifact", // 4  - Artefact 0
-            "danger",   // 5
-            "normal",   // 6
-            "heal",     // 7
-            "normal",   // 8
-            "minigame", // 9  - Mini-jeu 2
-            "clue",     // 10 - Indice 1
-            "dialogue", // 11
-            "artifact", // 12 - Artefact 1
-            "danger",   // 13
-            "heal",        // 14
-            "minigame_rps",// 15 - Pierre Feuille Ciseaux
-            "artifact", // 16 - Artefact 2
-            "dialogue", // 17
-            "danger",   // 18
-            "clue"      // 19 - Indice 2
+            "start",        // 0
+            "minigame",     // 1  - Cache-cache
+            "dialogue",     // 2
+            "clue",         // 3  - Indice 0
+            "artifact",     // 4  - Artefact 0
+            "danger",       // 5
+            "minigame_rps", // 6  - Pierre Feuille Ciseaux
+            "heal",         // 7
+            "normal",       // 8
+            "minigame",     // 9  - Cache-cache
+            "clue",         // 10 - Indice 1
+            "dialogue",     // 11
+            "artifact",     // 12 - Artefact 1
+            "danger",       // 13
+            "heal",         // 14
+            "minigame_rps", // 15 - Pierre Feuille Ciseaux
+            "artifact",     // 16 - Artefact 2
+            "dialogue",     // 17
+            "danger",       // 18
+            "clue"          // 19 - Indice 2
         };
 
         tileTypes.Clear();

@@ -75,6 +75,11 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public int miniGameAttempts = 0;
 
+    /// <summary>
+    /// Nombre de relances de dé disponibles achetées au shop.
+    /// </summary>
+    public int rerollsAvailable = 0;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -86,13 +91,69 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        // Charge la sauvegarde dès le démarrage si elle existe
-        SaveSystem.Load();
+        // La sauvegarde est chargée explicitement depuis MainMenu (Continuer)
+        // ou réinitialisée via ResetState() (Nouvelle Partie).
+        if (SaveSystem.HasSave())
+            SaveSystem.Load();
     }
 
     private void OnApplicationQuit()
     {
         SaveSystem.Save();
+    }
+
+    /// <summary>
+    /// Remet tous les états du GameManager à zéro (nouvelle partie).
+    /// </summary>
+    public void ResetState()
+    {
+        Gold               = 0;
+        Health             = 100;
+        SetLoopCount(0);
+        LastTileIndex      = 0;
+        LastResult         = null;
+        miniGameAttempts   = 0;
+        rerollsAvailable   = 0;
+        artifactsCollected = 0;
+        artifactFound      = new bool[3] { false, false, false };
+        cluesCollected     = 0;
+        clueFound          = new bool[3] { false, false, false };
+        gameWon            = false;
+        gameLost           = false;
+    }
+
+    /// <summary>
+    /// Achète une potion de soin (30 or → +30 PV, max 100).
+    /// Retourne false si pas assez d'or ou PV déjà pleins.
+    /// </summary>
+    public bool BuyHealthPotion()
+    {
+        if (Gold < 30 || Health >= 100) return false;
+        Gold   -= 30;
+        Health  = Mathf.Min(100, Health + 30);
+        return true;
+    }
+
+    /// <summary>
+    /// Achète une relance de dé (20 or → +1 relance stockée).
+    /// Retourne false si pas assez d'or.
+    /// </summary>
+    public bool BuyReroll()
+    {
+        if (Gold < 20) return false;
+        Gold -= 20;
+        rerollsAvailable++;
+        return true;
+    }
+
+    /// <summary>
+    /// Consomme une relance si disponible. Retourne true si une relance a été utilisée.
+    /// </summary>
+    public bool UseReroll()
+    {
+        if (rerollsAvailable <= 0) return false;
+        rerollsAvailable--;
+        return true;
     }
 
     /// <summary>
